@@ -1,38 +1,41 @@
-import { getEmployee } from "../helpers/getEmployee";
+import {
+	createEmployee,
+	deleteEmployee,
+	getEmployee,
+	updateEmployee,
+} from "../helpers/employeeService";
 import { Resolver, Query, Mutation, Arg, Int } from "type-graphql";
 import {
-	CreateEmployeeModel,
+	CreateEmployeeInputType,
 	EmployeeModel,
-	UpdateEmployeeModel,
+	UpdateEmployeeInputType,
 } from "./model";
-import { createEmployee } from "../helpers/createEmployee";
-import { updateEmployee } from "../helpers/updateEmployee";
-import { deleteEmployee } from "../helpers/deleteEmployee";
 
 @Resolver()
 export class EmployeeResolver {
 	@Query((_returns) => [EmployeeModel])
 	async employee() {
-		return await getEmployee();
+		return getEmployee();
 	}
 
 	@Mutation((_returns) => EmployeeModel)
 	async createEmployee(
-		@Arg("options", () => CreateEmployeeModel) options: CreateEmployeeModel
+		@Arg("options", () => CreateEmployeeInputType)
+		options: CreateEmployeeInputType
 	) {
-		return await createEmployee(options);
+		return createEmployee(options);
 	}
 
 	@Mutation((_returns) => EmployeeModel)
 	async updateEmployee(
-		@Arg("req", () => UpdateEmployeeModel) req: UpdateEmployeeModel,
-		@Arg("empId", () => Int) empId: number
+		@Arg("req", () => UpdateEmployeeInputType) req: UpdateEmployeeInputType,
+		@Arg("employeeId", () => Int) employeeId: number
 	) {
-		return await updateEmployee(empId, req);
+		return updateEmployee(employeeId, req);
 	}
 
 	@Mutation((_returns) => EmployeeModel)
-	async deleteEmployee(@Arg("empId", () => Int) empId: number) {
-		return await deleteEmployee(empId);
+	async deleteEmployee(@Arg("employeeId", () => Int) employeeId: number) {
+		return deleteEmployee(employeeId);
 	}
 }

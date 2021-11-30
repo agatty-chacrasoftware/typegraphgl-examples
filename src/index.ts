@@ -6,10 +6,11 @@ import { HelloResolver } from "./graphql/helloResolvers";
 import { EmployeeResolver } from "./graphql/employeeResolver";
 
 const main = async () => {
+	const schema = await buildSchema({
+		resolvers: [HelloResolver, EmployeeResolver],
+	});
 	const apolloServer = new ApolloServer({
-		schema: await buildSchema({
-			resolvers: [HelloResolver, EmployeeResolver],
-		}),
+		schema,
 	});
 	const app = Express();
 	await apolloServer.start();

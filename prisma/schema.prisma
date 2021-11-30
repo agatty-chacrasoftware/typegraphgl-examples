@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Employee{
-  empId Int @id @default(autoincrement())
+  employeeId Int @id @default(autoincrement())
   name String
   salary Int @default(100000)
 }

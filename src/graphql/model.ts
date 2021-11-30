@@ -2,18 +2,24 @@ import { Field, InputType, Int, ObjectType } from "type-graphql";
 
 @ObjectType()
 export class EmployeeModel {
-	@Field({ nullable: false })
-	empId: number;
+	@Field({ nullable: true })
+	employeeId: number;
 
-	@Field({ nullable: false })
+	@Field({ nullable: true })
 	name: string;
 
-	@Field({ nullable: false })
+	@Field({ nullable: true })
 	salary: number;
 }
 
+@ObjectType()
+export class Subscription {
+	@Field(() => EmployeeModel, { nullable: true })
+	newEmployee: EmployeeModel;
+}
+
 @InputType()
-export class CreateEmployeeModel {
+export class CreateEmployeeInputType {
 	@Field({ nullable: false })
 	name: string;
 
@@ -22,7 +28,7 @@ export class CreateEmployeeModel {
 }
 
 @InputType()
-export class UpdateEmployeeModel {
+export class UpdateEmployeeInputType {
 	@Field({ nullable: true })
 	name: string;
 
