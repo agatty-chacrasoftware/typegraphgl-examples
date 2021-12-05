@@ -3,13 +3,13 @@ import {
 	deleteEmployee,
 	getEmployee,
 	updateEmployee,
-} from "../helpers/employeeService";
+} from "../../helpers/employeeService";
 import { Resolver, Query, Mutation, Arg, Int } from "type-graphql";
 import {
 	CreateEmployeeInputType,
 	EmployeeModel,
 	UpdateEmployeeInputType,
-} from "./model";
+} from "../models/employeeModel";
 
 @Resolver()
 export class EmployeeResolver {
@@ -20,18 +20,18 @@ export class EmployeeResolver {
 
 	@Mutation((_returns) => EmployeeModel)
 	async createEmployee(
-		@Arg("options", () => CreateEmployeeInputType)
-		options: CreateEmployeeInputType
+		@Arg("input", () => CreateEmployeeInputType)
+		input: CreateEmployeeInputType
 	) {
-		return createEmployee(options);
+		return createEmployee(input);
 	}
 
 	@Mutation((_returns) => EmployeeModel)
 	async updateEmployee(
-		@Arg("req", () => UpdateEmployeeInputType) req: UpdateEmployeeInputType,
+		@Arg("input", () => UpdateEmployeeInputType) input: UpdateEmployeeInputType,
 		@Arg("employeeId", () => Int) employeeId: number
 	) {
-		return updateEmployee(employeeId, req);
+		return updateEmployee(employeeId, input);
 	}
 
 	@Mutation((_returns) => EmployeeModel)

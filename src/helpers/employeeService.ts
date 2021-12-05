@@ -2,7 +2,7 @@ import { PrismaClient } from ".prisma/client";
 import {
 	CreateEmployeeInputType,
 	UpdateEmployeeInputType,
-} from "../graphql/model";
+} from "../graphql/models/employeeModel";
 
 const prisma = new PrismaClient();
 
@@ -14,22 +14,26 @@ export const deleteEmployee = async (employeeId: number) => {
 	});
 };
 
-export const createEmployee = async (req: CreateEmployeeInputType) => {
+export const createEmployee = async (input: CreateEmployeeInputType) => {
 	return prisma.employee.create({
-		data: req,
+		data: input,
 	});
 };
 
 export const getEmployee = async () => {
-	return prisma.employee.findMany({});
+	return prisma.employee.findMany({
+		include: {
+			projects: true,
+		},
+	});
 };
 
 export const updateEmployee = async (
 	employeeId: number,
-	req: UpdateEmployeeInputType
+	input: UpdateEmployeeInputType
 ) => {
 	return prisma.employee.update({
-		data: req,
+		data: input,
 		where: {
 			employeeId: Number(employeeId),
 		},
