@@ -21,15 +21,18 @@ model Employee {
 }
 
 model Department {
-  departmentId    Int        @id @default(autoincrement())
+  departmentId   Int        @id @default(autoincrement())
   departmentName String
-  Employee       Employee[]
+  projects       Project[]
+  employees       Employee[]
 }
 
 model Project {
   projectId Int @id @default(autoincrement())
   projectName String
   employees ProjectAssignment[]
+  department Department @relation(fields: [departmentId], references: [departmentId])
+  departmentId Int
 }
 
 model ProjectAssignment {

@@ -14,7 +14,7 @@ export const createDepartment = async (input: CreateDepartmentInputModel) => {
 
 export const getDepartment = async () => {
 	const result = await prisma.department.findMany({
-		include: { Employee: true },
+		include: { employees: true, projects: true },
 	});
 	return result;
 };

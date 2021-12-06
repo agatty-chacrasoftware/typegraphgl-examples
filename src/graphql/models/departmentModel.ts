@@ -1,5 +1,6 @@
 import { ObjectType, Field, InputType } from "type-graphql";
 import { EmployeeModel } from "./employeeModel";
+import { ProjectModel } from "./projectModel";
 
 @ObjectType()
 export class DepartmentModel {
@@ -10,7 +11,10 @@ export class DepartmentModel {
 	departmentName: string;
 
 	@Field(() => [EmployeeModel], { nullable: true })
-	Employee: [EmployeeModel];
+	employees: [EmployeeModel];
+
+	@Field(() => [ProjectModel], { nullable: true })
+	projects: [ProjectModel];
 }
 
 @InputType()
