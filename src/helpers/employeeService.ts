@@ -20,7 +20,7 @@ export const createEmployee = async (input: CreateEmployeeInputType) => {
 	});
 };
 
-export const getEmployee = async () => {
+export const getEmployees = async () => {
 	return prisma.employee.findMany({
 		include: {
 			projects: true,

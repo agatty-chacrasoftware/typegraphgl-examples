@@ -1,6 +1,6 @@
 import {
 	createProjectAssignment,
-	getProjectAssignment,
+	getProjectAssignments,
 	updateProjectAssignment,
 } from "../../helpers/projectAssignmentService";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
@@ -13,8 +13,8 @@ import {
 @Resolver()
 export class ProjectAssignmentResolver {
 	@Query((_returns) => [ProjectAssignmentModel])
-	async projectAssignment() {
-		return getProjectAssignment();
+	async projectAssignments() {
+		return getProjectAssignments();
 	}
 
 	@Mutation((_returns) => ProjectAssignmentModel)

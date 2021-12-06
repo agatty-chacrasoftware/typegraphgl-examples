@@ -12,7 +12,7 @@ export const createProject = async (input: CreateProjectInputModel) => {
 	});
 };
 
-export const getProject = async () => {
+export const getProjects = async () => {
 	const result = await prisma.project.findMany({
 		include: { employees: true },
 	});

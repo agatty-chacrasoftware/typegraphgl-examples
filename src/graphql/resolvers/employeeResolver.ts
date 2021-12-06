@@ -1,7 +1,7 @@
 import {
 	createEmployee,
 	deleteEmployee,
-	getEmployee,
+	getEmployees,
 	updateEmployee,
 } from "../../helpers/employeeService";
 import { Resolver, Query, Mutation, Arg, Int } from "type-graphql";
@@ -14,8 +14,8 @@ import {
 @Resolver()
 export class EmployeeResolver {
 	@Query((_returns) => [EmployeeModel])
-	async employee() {
-		return getEmployee();
+	async employees() {
+		return getEmployees();
 	}
 
 	@Mutation((_returns) => EmployeeModel)

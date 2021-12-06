@@ -46,6 +46,6 @@ model ProjectAssignment {
 enum Designation {
   Junior
   Manager
-  Senior_Manager
+  SeniorManager
   Partner
 }

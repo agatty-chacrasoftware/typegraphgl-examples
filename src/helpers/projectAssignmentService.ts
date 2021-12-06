@@ -14,7 +14,7 @@ export const createProjectAssignment = async (
 	});
 };
 
-export const getProjectAssignment = async () => {
+export const getProjectAssignments = async () => {
 	const result = await prisma.projectAssignment.findMany({});
 	return result;
 };

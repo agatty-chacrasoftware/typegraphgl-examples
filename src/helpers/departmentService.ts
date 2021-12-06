@@ -12,7 +12,7 @@ export const createDepartment = async (input: CreateDepartmentInputModel) => {
 	});
 };
 
-export const getDepartment = async () => {
+export const getDepartments = async () => {
 	const result = await prisma.department.findMany({
 		include: { employees: true, projects: true },
 	});

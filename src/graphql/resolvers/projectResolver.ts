@@ -1,6 +1,6 @@
 import {
 	createProject,
-	getProject,
+	getProjects,
 	updateProject,
 } from "../../helpers/projectService";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
@@ -10,8 +10,8 @@ import { ProjectModel, UpdateProjectInputModel } from "../models/projectModel";
 @Resolver()
 export class ProjectResolver {
 	@Query((_returns) => [ProjectModel])
-	async project() {
-		return getProject();
+	async projects() {
+		return getProjects();
 	}
 
 	@Mutation((_returns) => ProjectModel)

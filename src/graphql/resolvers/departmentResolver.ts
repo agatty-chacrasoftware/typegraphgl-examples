@@ -1,6 +1,6 @@
 import {
 	createDepartment,
-	getDepartment,
+	getDepartments,
 	updateDepartment,
 } from "../../helpers/departmentService";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
@@ -13,8 +13,8 @@ import {
 @Resolver()
 export class DepartmentResolver {
 	@Query((_returns) => [DepartmentModel])
-	async department() {
-		return getDepartment();
+	async departments() {
+		return getDepartments();
 	}
 
 	@Mutation((_returns) => DepartmentModel)
