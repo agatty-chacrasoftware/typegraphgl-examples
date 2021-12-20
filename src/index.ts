@@ -2,14 +2,22 @@ import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
 import Express from "express";
 import { buildSchema } from "type-graphql";
-import { HelloResolver } from "./graphql/helloResolvers";
-import { EmployeeResolver } from "./graphql/employeeResolver";
+import { EmployeeResolver } from "./graphql/resolvers/employeeResolver";
+import { DepartmentResolver } from "./graphql/resolvers/departmentResolver";
+import { ProjectResolver } from "./graphql/resolvers/projectResolver";
+import { ProjectAssignmentResolver } from "./graphql/resolvers/projectAssignmentResolver";
 
 const main = async () => {
+	const schema = await buildSchema({
+		resolvers: [
+			EmployeeResolver,
+			DepartmentResolver,
+			ProjectResolver,
+			ProjectAssignmentResolver,
+		],
+	});
 	const apolloServer = new ApolloServer({
-		schema: await buildSchema({
-			resolvers: [HelloResolver, EmployeeResolver],
-		}),
+		schema,
 	});
 	const app = Express();
 	await apolloServer.start();

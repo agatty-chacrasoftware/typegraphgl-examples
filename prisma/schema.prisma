@@ -10,8 +10,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Employee{
-  empId Int @id @default(autoincrement())
-  name String
-  salary Int @default(100000)
+model Employee {
+  employeeId   Int        @id @default(autoincrement())
+  name         String
+  salary       Int        @default(100000)
+  designation  Designation @default(Junior)
+  department   Department @relation(fields: [departmentId], references: [departmentId])
+  departmentId Int
+  projects ProjectAssignment[]
+}
+
+model Department {
+  departmentId   Int        @id @default(autoincrement())
+  departmentName String
+  projects       Project[]
+  employees       Employee[]
+}
+
+model Project {
+  projectId Int @id @default(autoincrement())
+  projectName String
+  employees ProjectAssignment[]
+  department Department @relation(fields: [departmentId], references: [departmentId])
+  departmentId Int
+}
+
+model ProjectAssignment {
+  assignmentId Int @id @default(autoincrement())
+  employee Employee @relation(fields: [employeeId], references:[employeeId])
+  employeeId Int
+  project Project @relation(fields: [projectId], references:[projectId])
+  projectId Int
+}
+
+enum Designation {
+  Junior
+  Manager
+  SeniorManager
+  Partner
 }
