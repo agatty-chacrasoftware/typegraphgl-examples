@@ -1,9 +1,7 @@
-import { PrismaClient } from ".prisma/client";
 import { MyContext } from "../../types/MyContext";
 import { verifyToken } from "../../utils/authHelpers/verifyToken";
 import { MiddlewareFn } from "type-graphql";
-
-const prisma = new PrismaClient();
+import { getEmployeeById } from "../../helpers/employeeService";
 
 export const isAuth: MiddlewareFn<MyContext> = async ({ context }, next) => {
 	if (!context.req.headers.authorization) {
@@ -11,16 +9,10 @@ export const isAuth: MiddlewareFn<MyContext> = async ({ context }, next) => {
 	}
 
 	const token = context.req.headers.authorization;
-
 	const userId = await verifyToken(token);
+	const employee = await getEmployeeById(Number(userId));
 
-	const employeeId = await prisma.employee.findUnique({
-		where: {
-			employeeId: Number(userId),
-		},
-	});
-
-	if (!employeeId) {
+	if (!employee) {
 		throw new Error("Access Denied");
 	}
 
