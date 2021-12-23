@@ -39,3 +39,14 @@ export const updateEmployee = async (
 		},
 	});
 };
+
+export const getEmployeeById = async (employeeId: number) => {
+	return prisma.employee.findUnique({
+		where: {
+			employeeId: employeeId,
+		},
+		include: {
+			projects: true,
+		},
+	});
+};
