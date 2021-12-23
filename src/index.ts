@@ -9,8 +9,6 @@ import { ProjectAssignmentResolver } from "./graphql/resolvers/projectAssignment
 import admin from "firebase-admin";
 import { initializeApp } from "firebase/app";
 import { AuthResolver } from "./graphql/resolvers/authResolver";
-import serviceAccount from "./serviceAccountKey.json";
-import firebaseConfig from "./firebaseConfig.json";
 
 const main = async () => {
 	const schema = await buildSchema({
@@ -39,12 +37,15 @@ const main = async () => {
 
 	// Initialize using firebase adin SDK
 	// This is used to generate customized token.
+
+	const serviceAccount = require("../serviceAccountKey.json");
 	admin.initializeApp({
-		credential: admin.credential.cert(JSON.stringify(serviceAccount)),
+		credential: admin.credential.cert(serviceAccount),
 	});
 
 	// Initialize using firebase config
 	// Used to verify the customized token.
+	const firebaseConfig = require("../firebaseConfig.json");
 	initializeApp(firebaseConfig);
 
 	app.listen(4000, () => {
