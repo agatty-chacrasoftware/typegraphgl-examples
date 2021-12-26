@@ -9,6 +9,8 @@ import { ProjectAssignmentResolver } from "./graphql/resolvers/projectAssignment
 import admin from "firebase-admin";
 import { initializeApp } from "firebase/app";
 import { AuthResolver } from "./graphql/resolvers/authResolver";
+import { ProfilePictureResolver } from "./graphql/resolvers/profilePictureResolver";
+import { graphqlUploadExpress } from "graphql-upload";
 
 const main = async () => {
 	const schema = await buildSchema({
@@ -18,6 +20,7 @@ const main = async () => {
 			DepartmentResolver,
 			ProjectResolver,
 			ProjectAssignmentResolver,
+			ProfilePictureResolver,
 		],
 	});
 
@@ -32,7 +35,9 @@ const main = async () => {
 	});
 
 	const app = Express();
+
 	await apolloServer.start();
+	app.use(graphqlUploadExpress());
 	apolloServer.applyMiddleware({ app });
 
 	// Initialize using firebase adin SDK
@@ -49,8 +54,8 @@ const main = async () => {
 	initializeApp(firebaseConfig);
 
 	app.listen(4000, () => {
-		console.log("Server started at http://localhost:4000/graphql");
+		console.log("server started on http://localhost:4000/graphql");
 	});
 };
 
-main();
+main().catch((err) => console.error(err));

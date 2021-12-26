@@ -18,6 +18,14 @@ model Employee {
   department   Department @relation(fields: [departmentId], references: [departmentId])
   departmentId Int
   projects ProjectAssignment[]
+  profilePictureUrl EmployeeProfilePicture?
+}
+
+model EmployeeProfilePicture {
+  profileId Int @id @default(autoincrement())
+  profilePictureUrl String
+  employeeId Int
+  Employee Employee @relation(fields: [employeeId], references: [employeeId])
 }
 
 model Department {
