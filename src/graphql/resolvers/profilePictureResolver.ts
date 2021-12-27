@@ -1,7 +1,7 @@
 import { Resolver, Mutation, Arg } from "type-graphql";
 import { GraphQLUpload } from "graphql-upload";
 import { Upload } from "../../types/Upload";
-import { getCloudinaryUrl } from "../../helpers/profilePictureService";
+import { uploadImageToCloudinary } from "../../helpers/profilePictureService";
 
 @Resolver()
 export class ProfilePictureResolver {
@@ -10,7 +10,7 @@ export class ProfilePictureResolver {
 		@Arg("picture", () => GraphQLUpload)
 		{ createReadStream }: Upload
 	) {
-		const profilePictureUrl = await getCloudinaryUrl(createReadStream);
+		const profilePictureUrl = await uploadImageToCloudinary(createReadStream);
 
 		return profilePictureUrl;
 	}

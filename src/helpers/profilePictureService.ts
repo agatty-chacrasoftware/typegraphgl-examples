@@ -1,29 +1,22 @@
-const cloudinary = require("cloudinary").v2;
+import cloudinary from "cloudinary";
 
-export const getCloudinaryUrl = async (createReadStream) => {
-	cloudinary.config({
-		cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-		api_key: process.env.CLOUDINARY_API_KEY,
-		api_secret: process.env.CLOUDINARY_API_SECRET,
-	});
-
+export const uploadImageToCloudinary = async (createReadStream) => {
 	const { secure_url: profilePictureUrl } = await new Promise(
 		(resolve, reject) => {
 			createReadStream().pipe(
-				cloudinary.uploader.upload_stream((error, result) => {
-					if (error) {
-						reject(error);
-					}
+				cloudinary.v2.uploader.upload_stream(
+					{ folder: "test" },
+					(error, result) => {
+						if (error) {
+							reject(error);
+						}
 
-					resolve(result);
-				})
+						resolve(result);
+					}
+				)
 			);
 		}
 	);
-
-	if (!profilePictureUrl) {
-		throw new Error("Not able to upload image tocloudinary");
-	}
 
 	return profilePictureUrl;
 };

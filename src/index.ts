@@ -13,6 +13,7 @@ import { graphqlUploadExpress } from "graphql-upload";
 import dotenv from "dotenv";
 dotenv.config();
 import { ProfilePictureResolver } from "./graphql/resolvers/profilePictureResolver";
+import cloudinary from "cloudinary";
 
 const main = async () => {
 	const schema = await buildSchema({
@@ -54,6 +55,13 @@ const main = async () => {
 	// Used to verify the customized token.
 	const firebaseConfig = require("../firebaseConfig.json");
 	initializeApp(firebaseConfig);
+
+	cloudinary.v2.config({
+		cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+		api_key: process.env.CLOUDINARY_API_KEY,
+		api_secret: process.env.CLOUDINARY_API_SECRET,
+		folder: process.env.CLOUDINARY_FOLDER,
+	});
 
 	app.listen(4000, () => {
 		console.log("server started on http://localhost:4000/graphql");
