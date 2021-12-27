@@ -19,6 +19,9 @@ export class EmployeeModel {
 	@Field({ nullable: true })
 	departmentId: number;
 
+	@Field({ nullable: true })
+	profilePictureUrl: string;
+
 	@Field(() => [ProjectAssignmentModel], { nullable: true })
 	projects: [ProjectAssignmentModel];
 }
@@ -36,6 +39,9 @@ export class CreateEmployeeInputType {
 
 	@Field({ nullable: false })
 	departmentId: number;
+
+	@Field({ nullable: true })
+	profilePictureUrl: string;
 }
 
 @InputType()
