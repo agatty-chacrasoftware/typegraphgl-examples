@@ -15,17 +15,10 @@ model Employee {
   name         String
   salary       Int        @default(100000)
   designation  Designation @default(Junior)
+  profilePictureUrl String
   department   Department @relation(fields: [departmentId], references: [departmentId])
   departmentId Int
   projects ProjectAssignment[]
-  image EmployeeProfilePicture?
-}
-
-model EmployeeProfilePicture {
-  profileId Int @id @default(autoincrement())
-  profilePictureUrl String
-  employeeId Int
-  Employee Employee @relation(fields: [employeeId], references: [employeeId])
 }
 
 model Department {

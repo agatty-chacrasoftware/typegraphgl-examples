@@ -1,28 +1,17 @@
-import { Resolver, Mutation, Arg, Int } from "type-graphql";
+import { Resolver, Mutation, Arg } from "type-graphql";
 import { GraphQLUpload } from "graphql-upload";
 import { Upload } from "../../types/Upload";
-import {
-	createEmployeeProfilePicture,
-	uploadImageToCloudinary,
-} from "../../helpers/profilePictureService";
-import { ProfilePictureModel } from "../models/profilePictureModel";
+import { getCloudinaryUrl } from "../../helpers/profilePictureService";
 
 @Resolver()
 export class ProfilePictureResolver {
-	@Mutation(() => ProfilePictureModel)
+	@Mutation(() => String)
 	async addProfilePicture(
 		@Arg("picture", () => GraphQLUpload)
-		{ createReadStream }: Upload,
-		@Arg("employeeId", () => Int)
-		employeeId: number
+		{ createReadStream }: Upload
 	) {
-		const profilePictureUrl = await uploadImageToCloudinary(createReadStream);
+		const profilePictureUrl = await getCloudinaryUrl(createReadStream);
 
-		const employeeProfilePictureDetails = await createEmployeeProfilePicture(
-			profilePictureUrl,
-			Number(employeeId)
-		);
-
-		return employeeProfilePictureDetails;
+		return profilePictureUrl;
 	}
 }

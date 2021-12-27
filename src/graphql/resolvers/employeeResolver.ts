@@ -18,6 +18,8 @@ import {
 	UpdateEmployeeInputType,
 } from "../models/employeeModel";
 import { isAuth } from "../middleware/auth";
+import { GraphQLUpload } from "graphql-upload";
+import { Upload } from "../../types/Upload";
 
 @Resolver()
 export class EmployeeResolver {
@@ -28,12 +30,13 @@ export class EmployeeResolver {
 	}
 
 	@Mutation((_returns) => EmployeeModel)
-	@UseMiddleware(isAuth)
 	async createEmployee(
 		@Arg("input", () => CreateEmployeeInputType)
-		input: CreateEmployeeInputType
+		input: CreateEmployeeInputType,
+		@Arg("picture", () => GraphQLUpload)
+		{ createReadStream }: Upload
 	) {
-		return createEmployee(input);
+		return createEmployee(input, createReadStream);
 	}
 
 	@Mutation((_returns) => EmployeeModel)

@@ -1,11 +1,6 @@
-import { PrismaClient } from ".prisma/client";
-import { getEmployeeById } from "./employeeService";
-const prisma = new PrismaClient();
-import dotenv from "dotenv";
-dotenv.config();
 const cloudinary = require("cloudinary").v2;
 
-export const uploadImageToCloudinary = async (createReadStream) => {
+export const getCloudinaryUrl = async (createReadStream) => {
 	cloudinary.config({
 		cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 		api_key: process.env.CLOUDINARY_API_KEY,
@@ -31,23 +26,4 @@ export const uploadImageToCloudinary = async (createReadStream) => {
 	}
 
 	return profilePictureUrl;
-};
-
-
-export const createEmployeeProfilePicture = async (
-	profilePictureUrl: string,
-	employeeId: number
-) => {
-	const employeeById = await getEmployeeById(employeeId);
-
-	if (!employeeById) {
-		throw new Error("Employee not present");
-	}
-
-	return prisma.employeeProfilePicture.create({
-		data: {
-			profilePictureUrl: profilePictureUrl,
-			employeeId: employeeId,
-		},
-	});
 };

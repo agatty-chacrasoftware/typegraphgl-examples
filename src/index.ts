@@ -9,8 +9,10 @@ import { ProjectAssignmentResolver } from "./graphql/resolvers/projectAssignment
 import admin from "firebase-admin";
 import { initializeApp } from "firebase/app";
 import { AuthResolver } from "./graphql/resolvers/authResolver";
-import { ProfilePictureResolver } from "./graphql/resolvers/profilePictureResolver";
 import { graphqlUploadExpress } from "graphql-upload";
+import dotenv from "dotenv";
+dotenv.config();
+import { ProfilePictureResolver } from "./graphql/resolvers/profilePictureResolver";
 
 const main = async () => {
 	const schema = await buildSchema({

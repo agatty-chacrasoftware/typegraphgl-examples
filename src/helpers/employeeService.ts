@@ -3,6 +3,7 @@ import {
 	CreateEmployeeInputType,
 	UpdateEmployeeInputType,
 } from "../graphql/models/employeeModel";
+import { getCloudinaryUrl } from "./profilePictureService";
 
 const prisma = new PrismaClient();
 
@@ -14,7 +15,12 @@ export const deleteEmployee = async (employeeId: number) => {
 	});
 };
 
-export const createEmployee = async (input: CreateEmployeeInputType) => {
+export const createEmployee = async (
+	input: CreateEmployeeInputType,
+	createReadStream
+) => {
+	const profilePictureUrl = await getCloudinaryUrl(createReadStream);
+	input.profilePictureUrl = profilePictureUrl;
 	return prisma.employee.create({
 		data: input,
 	});
