@@ -1,5 +1,6 @@
 import { Field, InputType, Int, ObjectType } from "type-graphql";
 import { Designation } from "../enums";
+import { ProfilePictureModel } from "./profilePictureModel";
 import { ProjectAssignmentModel } from "./projectAssignmentModel";
 
 @ObjectType()
@@ -18,6 +19,9 @@ export class EmployeeModel {
 
 	@Field({ nullable: true })
 	departmentId: number;
+
+	@Field(() => ProfilePictureModel, { nullable: true })
+	image: ProfilePictureModel;
 
 	@Field(() => [ProjectAssignmentModel], { nullable: true })
 	projects: [ProjectAssignmentModel];
