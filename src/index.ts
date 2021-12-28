@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { ApolloServer } from "apollo-server-express";
+import { ApolloServer, AuthenticationError } from "apollo-server-express";
 import Express from "express";
 import { buildSchema } from "type-graphql";
 import { EmployeeResolver } from "./graphql/resolvers/employeeResolver";
@@ -34,6 +34,13 @@ const main = async () => {
 				req,
 			};
 			return context;
+		},
+		formatError: (err) => {
+			if (err.originalError instanceof AuthenticationError) {
+				console.log(err);
+				return new Error("Error in Authentication");
+			}
+			return err;
 		},
 	});
 
