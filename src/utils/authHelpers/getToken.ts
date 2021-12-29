@@ -1,5 +1,5 @@
 import { getAuth } from "firebase-admin/auth";
-import { logger } from "../logger";
+import { logger } from "../loggerHelper/logger";
 
 export const getToken = async (uid) => {
 	return getAuth()

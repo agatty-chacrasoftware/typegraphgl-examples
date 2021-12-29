@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { ApolloServer, AuthenticationError } from "apollo-server-express";
+import { ApolloServer } from "apollo-server-express";
 import Express from "express";
 import { buildSchema } from "type-graphql";
 import { EmployeeResolver } from "./graphql/resolvers/employeeResolver";
@@ -14,7 +14,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import { ProfilePictureResolver } from "./graphql/resolvers/profilePictureResolver";
 import cloudinary from "cloudinary";
-import { logger } from "./utils/logger";
+import { logger } from "./utils/loggerHelper/logger";
+import { getErrorType } from "./utils/errorsHelpers/getErrorType";
 const main = async () => {
 	const schema = await buildSchema({
 		resolvers: [
@@ -36,11 +37,9 @@ const main = async () => {
 			return context;
 		},
 		formatError: (err) => {
-			if (err.originalError instanceof AuthenticationError) {
-				logger.error("Error:" + err);
-				return new Error("Error in Authentication");
-			}
-			return err;
+			const errorCode = getErrorType(err.message);
+			logger.error(errorCode);
+			return { message: errorCode.message, statusCode: errorCode.statusCode };
 		},
 	});
 
