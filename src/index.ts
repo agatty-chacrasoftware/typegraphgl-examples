@@ -14,7 +14,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import { ProfilePictureResolver } from "./graphql/resolvers/profilePictureResolver";
 import cloudinary from "cloudinary";
-
+import { logger } from "./utils/logger";
 const main = async () => {
 	const schema = await buildSchema({
 		resolvers: [
@@ -37,7 +37,7 @@ const main = async () => {
 		},
 		formatError: (err) => {
 			if (err.originalError instanceof AuthenticationError) {
-				console.log(err);
+				logger.error("Error:" + err);
 				return new Error("Error in Authentication");
 			}
 			return err;
@@ -71,8 +71,8 @@ const main = async () => {
 	});
 
 	app.listen(4000, () => {
-		console.log("server started on http://localhost:4000/graphql");
+		logger.info("server started on http://localhost:4000/graphql");
 	});
 };
 
-main().catch((err) => console.error(err));
+main().catch((err) => logger.error(err));

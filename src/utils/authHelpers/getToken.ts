@@ -1,4 +1,5 @@
 import { getAuth } from "firebase-admin/auth";
+import { logger } from "../logger";
 
 export const getToken = async (uid) => {
 	return getAuth()
@@ -7,6 +8,6 @@ export const getToken = async (uid) => {
 			return customToken;
 		})
 		.catch((error) => {
-			console.log("Error creating custom token:", error);
+			logger.error("Error creating custom token:", error);
 		});
 };
