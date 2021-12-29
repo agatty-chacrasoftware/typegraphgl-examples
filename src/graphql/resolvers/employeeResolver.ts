@@ -1,6 +1,7 @@
 import {
 	createEmployee,
 	deleteEmployee,
+	getEmployeeById,
 	getEmployees,
 	updateEmployee,
 } from "../../helpers/employeeService";
@@ -27,6 +28,14 @@ export class EmployeeResolver {
 	@Query((_returns) => [EmployeeModel])
 	async employees() {
 		return getEmployees();
+	}
+
+	@Query((_returns) => [EmployeeModel])
+	async getEmployeeById(
+		@Arg("employeeId", () => Int)
+		employeeId: number
+	) {
+		return getEmployeeById(employeeId);
 	}
 
 	@Mutation((_returns) => EmployeeModel)
