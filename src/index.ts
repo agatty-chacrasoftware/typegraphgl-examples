@@ -15,7 +15,6 @@ dotenv.config();
 import { ProfilePictureResolver } from "./graphql/resolvers/profilePictureResolver";
 import cloudinary from "cloudinary";
 import { logger } from "./utils/loggerHelper/logger";
-import { getErrorType } from "./utils/errorsHelpers/getErrorType";
 const main = async () => {
 	const schema = await buildSchema({
 		resolvers: [
@@ -37,9 +36,10 @@ const main = async () => {
 			return context;
 		},
 		formatError: (err) => {
-			const errorCode = getErrorType(err.message);
-			logger.error(errorCode);
-			return { message: errorCode.message, statusCode: errorCode.statusCode };
+			return {
+				message: err.message,
+				status: err.originalError,
+			};
 		},
 	});
 
