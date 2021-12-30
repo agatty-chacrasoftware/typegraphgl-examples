@@ -18,7 +18,7 @@ import {
 	EmployeeModel,
 	UpdateEmployeeInputType,
 } from "../models/employeeModel";
-import { isAuth } from "../middleware/auth";
+import { isAuth } from "../middleware/authMiddleware";
 import { GraphQLUpload } from "graphql-upload";
 import { Upload } from "../../types/Upload";
 
@@ -30,7 +30,7 @@ export class EmployeeResolver {
 		return getEmployees();
 	}
 
-	@Query((_returns) => [EmployeeModel])
+	@Query((_returns) => EmployeeModel)
 	async getEmployeeById(
 		@Arg("employeeId", () => Int)
 		employeeId: number

@@ -15,6 +15,9 @@ dotenv.config();
 import { ProfilePictureResolver } from "./graphql/resolvers/profilePictureResolver";
 import cloudinary from "cloudinary";
 import { logger } from "./utils/loggerHelper/logger";
+import { ErrorLoggerMiddleware } from "./graphql/middleware/ErrorLoggerMiddleware";
+import { GraphQLError } from "graphql";
+import { RequestTimerMiddleware } from "./graphql/middleware/RequestTimerMiddleware";
 const main = async () => {
 	const schema = await buildSchema({
 		resolvers: [
@@ -25,6 +28,7 @@ const main = async () => {
 			ProjectAssignmentResolver,
 			ProfilePictureResolver,
 		],
+		globalMiddlewares: [ErrorLoggerMiddleware, RequestTimerMiddleware],
 	});
 
 	const apolloServer = new ApolloServer({
@@ -35,10 +39,10 @@ const main = async () => {
 			};
 			return context;
 		},
-		formatError: (err) => {
+		formatError: (error: GraphQLError) => {
 			return {
-				message: err.message,
-				status: err.originalError,
+				message: error.message,
+				status: error.originalError,
 			};
 		},
 	});
@@ -74,4 +78,4 @@ const main = async () => {
 	});
 };
 
-main().catch((err) => logger.error(err));
+main();
