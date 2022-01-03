@@ -1,7 +1,7 @@
 import { Resolver, Mutation, Arg } from "type-graphql";
 import { GraphQLUpload } from "graphql-upload";
 import { Upload } from "../../types/Upload";
-import { uploadImageToCloudinary } from "../../helpers/profilePictureService";
+import { uploadImageToCloudinary } from "../../services/profilePictureService";
 
 @Resolver()
 export class ProfilePictureResolver {

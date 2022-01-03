@@ -1,9 +1,10 @@
 import {
 	createEmployee,
 	deleteEmployee,
+	getEmployeeById,
 	getEmployees,
 	updateEmployee,
-} from "../../helpers/employeeService";
+} from "../../services/employeeService";
 import {
 	Resolver,
 	Query,
@@ -17,7 +18,7 @@ import {
 	EmployeeModel,
 	UpdateEmployeeInputType,
 } from "../models/employeeModel";
-import { isAuth } from "../middleware/auth";
+import { isAuth } from "../middleware/authMiddleware";
 import { GraphQLUpload } from "graphql-upload";
 import { Upload } from "../../types/Upload";
 
@@ -27,6 +28,14 @@ export class EmployeeResolver {
 	@Query((_returns) => [EmployeeModel])
 	async employees() {
 		return getEmployees();
+	}
+
+	@Query((_returns) => EmployeeModel)
+	async getEmployeeById(
+		@Arg("employeeId", () => Int)
+		employeeId: number
+	) {
+		return getEmployeeById(employeeId);
 	}
 
 	@Mutation((_returns) => EmployeeModel)

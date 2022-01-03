@@ -2,7 +2,7 @@ import {
 	createProject,
 	getProjects,
 	updateProject,
-} from "../../helpers/projectService";
+} from "../../services/projectService";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { CreateProjectInputModel } from "../models/ProjectModel";
 import { ProjectModel, UpdateProjectInputModel } from "../models/projectModel";

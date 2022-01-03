@@ -14,7 +14,10 @@ import dotenv from "dotenv";
 dotenv.config();
 import { ProfilePictureResolver } from "./graphql/resolvers/profilePictureResolver";
 import cloudinary from "cloudinary";
-
+import { logger } from "./utils/loggerHelper/logger";
+import { ErrorLoggerMiddleware } from "./graphql/middleware/ErrorLoggerMiddleware";
+import { GraphQLError } from "graphql";
+import { RequestTimerMiddleware } from "./graphql/middleware/RequestTimerMiddleware";
 const main = async () => {
 	const schema = await buildSchema({
 		resolvers: [
@@ -25,6 +28,7 @@ const main = async () => {
 			ProjectAssignmentResolver,
 			ProfilePictureResolver,
 		],
+		globalMiddlewares: [ErrorLoggerMiddleware, RequestTimerMiddleware],
 	});
 
 	const apolloServer = new ApolloServer({
@@ -34,6 +38,12 @@ const main = async () => {
 				req,
 			};
 			return context;
+		},
+		formatError: (error: GraphQLError) => {
+			return {
+				message: error.message,
+				status: error.originalError,
+			};
 		},
 	});
 
@@ -64,8 +74,8 @@ const main = async () => {
 	});
 
 	app.listen(4000, () => {
-		console.log("server started on http://localhost:4000/graphql");
+		logger.info("server started on http://localhost:4000/graphql");
 	});
 };
 
-main().catch((err) => console.error(err));
+main();

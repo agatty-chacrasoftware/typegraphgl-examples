@@ -2,7 +2,7 @@ import {
 	createProjectAssignment,
 	getProjectAssignments,
 	updateProjectAssignment,
-} from "../../helpers/projectAssignmentService";
+} from "../../services/projectAssignmentService";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import {
 	CreateProjectAssignmentInputModel,

@@ -1,4 +1,4 @@
-import { getToken } from "../../utils/authHelpers/getToken";
+import { getToken } from "../../utils/authHelper/getToken";
 import { Resolver, Query, Arg } from "type-graphql";
 import { AuthenticationModel } from "../models/authenticationModel";
 
