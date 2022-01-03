@@ -4,7 +4,7 @@ import {
 	updateProject,
 } from "../../services/projectService";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
-import { CreateProjectInputModel } from "../models/ProjectModel";
+import { CreateProjectInputModel } from "../models/projectModel";
 import { ProjectModel, UpdateProjectInputModel } from "../models/projectModel";
 
 @Resolver()

@@ -2,7 +2,7 @@ import { PrismaClient } from ".prisma/client";
 import {
 	CreateProjectInputModel,
 	UpdateProjectInputModel,
-} from "../graphql/models/ProjectModel";
+} from "../graphql/models/projectModel";
 
 const prisma = new PrismaClient();
 
