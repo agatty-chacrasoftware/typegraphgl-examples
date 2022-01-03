@@ -73,7 +73,7 @@ const main = async () => {
 		folder: process.env.CLOUDINARY_FOLDER,
 	});
 
-	app.listen(parseInt(process.env.Port), () => {
+	app.listen(parseInt(process.env.PORT), () => {
 		logger.info(
 			`server started on http://localhost:${process.env.PORT}/graphql`
 		);
