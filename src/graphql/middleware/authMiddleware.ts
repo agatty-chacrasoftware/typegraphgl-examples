@@ -1,9 +1,9 @@
 import { MyContext } from "../../types/MyContext";
 import { verifyToken } from "../../utils/authHelper/verifyToken";
 import { MiddlewareFn } from "type-graphql";
-import { getEmployeeById } from "../../helpers/employeeService";
-import { NotAuthorizedError } from "../../utils/errorHelper/notAuthorizedError";
+import { getEmployeeById } from "../../services/employeeService";
 import { logger } from "../../utils/loggerHelper/logger";
+import { NotAuthorizedError } from "../../utils/errorHelper";
 
 export const isAuth: MiddlewareFn<MyContext> = async ({ context }, next) => {
 	if (!context.req.headers.authorization) {

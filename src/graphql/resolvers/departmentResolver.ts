@@ -2,7 +2,7 @@ import {
 	createDepartment,
 	getDepartments,
 	updateDepartment,
-} from "../../helpers/departmentService";
+} from "../../services/departmentService";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import {
 	CreateDepartmentInputModel,

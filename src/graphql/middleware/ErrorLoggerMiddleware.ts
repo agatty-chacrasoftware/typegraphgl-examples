@@ -8,11 +8,11 @@ export const ErrorLoggerMiddleware: MiddlewareFn<any> = async (
 	try {
 		return await next();
 	} catch (error) {
-		logger.warn(context);
 		logger.error(
 			`ErrorCode: ${error.errorCode}. StatusCode: ${error.statusCode}. Message: ${error.message}`,
 			{
-				...error.loggingErrorBody,
+				correlationId: context.correlationId,
+				loogingError: error.loggingErrorBody,
 			}
 		);
 

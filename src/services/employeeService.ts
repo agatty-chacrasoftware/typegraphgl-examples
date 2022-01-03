@@ -5,7 +5,7 @@ import {
 } from "../graphql/models/employeeModel";
 import { uploadImageToCloudinary } from "./profilePictureService";
 import { logger } from "../utils/loggerHelper/logger";
-import { NotFoundError } from "src/utils/errorHelper/notFoundError";
+import { NotFoundError } from "../utils/errorHelper";
 
 const prisma = new PrismaClient();
 

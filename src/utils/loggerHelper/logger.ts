@@ -29,7 +29,7 @@ const format = winston.format.combine(
 const transports = [
 	new winston.transports.Console(),
 	new winston.transports.File({
-		filename: "logs/all.log",
+		filename: "logs/error.log",
 		level: "error",
 	}),
 ];

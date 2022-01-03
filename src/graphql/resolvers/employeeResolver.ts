@@ -4,7 +4,7 @@ import {
 	getEmployeeById,
 	getEmployees,
 	updateEmployee,
-} from "../../helpers/employeeService";
+} from "../../services/employeeService";
 import {
 	Resolver,
 	Query,
