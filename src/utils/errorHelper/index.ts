@@ -1,3 +1,3 @@
-export * from "./NotFoundError";
-export * from "./NotAuthorizedError";
-export * from "./ServerError";
+export * from "./notFoundError";
+export * from "./notAuthorizedError";
+export * from "./serverError";
