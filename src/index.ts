@@ -15,9 +15,9 @@ dotenv.config();
 import { ProfilePictureResolver } from "./graphql/resolvers/profilePictureResolver";
 import cloudinary from "cloudinary";
 import { logger } from "./utils/loggerHelper/logger";
-import { ErrorLoggerMiddleware } from "./graphql/middleware/ErrorLoggerMiddleware";
+import { ErrorLoggerMiddleware } from "./graphql/middleware/errorLoggerMiddleware";
 import { GraphQLError } from "graphql";
-import { RequestTimerMiddleware } from "./graphql/middleware/RequestTimerMiddleware";
+import { RequestTimerMiddleware } from "./graphql/middleware/requestTimerMiddleware";
 const main = async () => {
 	const schema = await buildSchema({
 		resolvers: [
@@ -73,8 +73,10 @@ const main = async () => {
 		folder: process.env.CLOUDINARY_FOLDER,
 	});
 
-	app.listen(4000, () => {
-		logger.info("server started on http://localhost:4000/graphql");
+	app.listen(parseInt(process.env.Port), () => {
+		logger.info(
+			`server started on http://localhost:${process.env.PORT}/graphql`
+		);
 	});
 };
 
