@@ -12,7 +12,7 @@ export const ErrorLoggerMiddleware: MiddlewareFn<any> = async (
 			`ErrorCode: ${error.errorCode}. StatusCode: ${error.statusCode}. Message: ${error.message}`,
 			{
 				correlationId: context.correlationId,
-				loogingError: error.loggingErrorBody,
+				loggingError: error.loggingErrorBody,
 			}
 		);
 

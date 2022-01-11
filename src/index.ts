@@ -17,7 +17,7 @@ import { ProfilePictureResolver } from "./graphql/resolvers/profilePictureResolv
 
 import { ErrorLoggerMiddleware } from "./graphql/middleware/errorLoggerMiddleware";
 import { RequestTimerMiddleware } from "./graphql/middleware/requestTimerMiddleware";
-import { ResponseTransactionIdMiddleware } from "./graphql/middleware/responseTransactionIdMiddleware";
+import { CorrelationIdMiddleware } from "./graphql/middleware/correlationIdMiddleware";
 import { moesifMiddleware } from "./utils/analyticsHelper/moesifMiddleware";
 
 import { logger } from "./utils/loggerHelper/logger";
@@ -38,7 +38,7 @@ const main = async () => {
 		globalMiddlewares: [
 			ErrorLoggerMiddleware,
 			RequestTimerMiddleware,
-			ResponseTransactionIdMiddleware,
+			CorrelationIdMiddleware,
 		],
 	});
 
