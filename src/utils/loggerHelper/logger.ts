@@ -1,4 +1,5 @@
 import * as winston from "winston";
+import { allColors } from "winston/lib/winston/config";
 
 const levels = {
 	error: 0,
@@ -16,9 +17,23 @@ const colors = {
 	debug: "white",
 };
 
+const env = process.env.NODE_ENV;
+
+const format = (): winston.Logform.Format => {
+	return env === "production" ? prodFormat : devFormat;
+};
+
 winston.addColors(colors);
 
-const format = winston.format.combine(
+const devFormat = winston.format.combine(
+	winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss:ms" }),
+	winston.format.colorize(allColors),
+	winston.format.printf(
+		(info) => `${info.timestamp} ${info.level}: ${info.message}`
+	)
+);
+
+const prodFormat = winston.format.combine(
 	winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss:ms" }),
 	winston.format.printf(
 		(info) => `${info.timestamp} ${info.level}: ${info.message}`
@@ -36,6 +51,6 @@ const transports = [
 
 export const logger = winston.createLogger({
 	levels: levels,
-	format,
+	format: format(),
 	transports: transports,
 });

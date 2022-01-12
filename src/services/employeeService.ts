@@ -4,7 +4,6 @@ import {
 	UpdateEmployeeInputType,
 } from "../graphql/models/employeeModel";
 import { uploadImageToCloudinary } from "./profilePictureService";
-import { logger } from "../utils/loggerHelper/logger";
 import { NotFoundError } from "../utils/errorHelper";
 
 const prisma = new PrismaClient();
@@ -43,7 +42,6 @@ export const updateEmployee = async (
 	const employee = await getEmployeeById(employeeId);
 
 	if (!employee) {
-		logger.error("Employee not present in database");
 		throw new NotFoundError("Employee not found", {
 			employeeId: employeeId,
 		});
@@ -68,7 +66,6 @@ export const getEmployeeById = async (employeeId: number) => {
 	});
 
 	if (!employee) {
-		logger.error("Employee not present in database");
 		throw new NotFoundError("Employee not found", {
 			employeeId: employeeId,
 		});
