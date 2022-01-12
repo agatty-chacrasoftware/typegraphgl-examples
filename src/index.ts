@@ -17,6 +17,7 @@ import { ProfilePictureResolver } from "./graphql/resolvers/profilePictureResolv
 
 import { ErrorLoggerMiddleware } from "./graphql/middleware/errorLoggerMiddleware";
 import { RequestTimerMiddleware } from "./graphql/middleware/requestTimerMiddleware";
+import { CorrelationIdMiddleware } from "./graphql/middleware/correlationIdMiddleware";
 import { moesifMiddleware } from "./utils/analyticsHelper/moesifMiddleware";
 
 import { logger } from "./utils/loggerHelper/logger";
@@ -34,17 +35,19 @@ const main = async () => {
 			ProjectAssignmentResolver,
 			ProfilePictureResolver,
 		],
-		globalMiddlewares: [ErrorLoggerMiddleware, RequestTimerMiddleware],
+		globalMiddlewares: [
+			ErrorLoggerMiddleware,
+			RequestTimerMiddleware,
+			CorrelationIdMiddleware,
+		],
 	});
 
 	const apolloServer = new ApolloServer({
 		schema,
-		context: ({ req }) => {
-			const context = {
-				req,
-			};
-			return context;
-		},
+		context: ({ req, res }) => ({
+			req,
+			res,
+		}),
 		formatError: (error: GraphQLError) => {
 			return {
 				message: error.message,
