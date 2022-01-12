@@ -10,8 +10,11 @@ export const CorrelationIdMiddleware: MiddlewareFn<any> = async (
 	}
 
 	context.responseCorrelationId = true;
+
 	const correlationId = uuid4();
+
 	context.correlationId = correlationId;
 	context.res.setHeader("Correlation-Id", context.correlationId);
+
 	return await next();
 };
